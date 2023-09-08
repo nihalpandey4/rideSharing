@@ -7,9 +7,9 @@ class RiderManager {
 
   /**
    * creates a rider against a unique name
-   * @param {String} name 
-   * @param {Number} x 
-   * @param {Number} y 
+   * @param {String} name
+   * @param {Number} x
+   * @param {Number} y
    */
   registerRider(name, x, y) {
     if (
@@ -20,15 +20,12 @@ class RiderManager {
       throw new Error("x and y must be numbers, name must be a string");
     }
 
-    if(this.directory.has(name))
-        throw new Error("Rider already exists");
-    
-    let rider = new Rider(name,x,y);
-    this.directory.set(name) = rider;
+    if (this.directory.has(name)) throw new Error("Rider already exists");
+
+    let rider = new Rider(name, x, y);
+    this.directory.set(name, rider);
   }
-
 }
-
 
 const riderManager = new RiderManager();
 

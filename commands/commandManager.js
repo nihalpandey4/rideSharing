@@ -1,4 +1,5 @@
 const DriverManager = require("../entities/driverManager");
+const RideMatching = require("../entities/rideMatching");
 const RiderManager = require("../entities/riderManager");
 
 class CommandManager {
@@ -17,8 +18,8 @@ class CommandManager {
       case "ADD_RIDER":
         this.addRider(args[1], parseFloat(args[2]), parseFloat(args[3]));
         break;
-      // case 'MATCH':
-      //     return this.matchRider(args[1]);
+      case "MATCH":
+        this.addResult(this.matchRider(args[1]));
       // case 'START_RIDE':
       //     return this.startRide(args[1], parseInt(args[2]), args[3]);
       // case 'STOP_RIDE':
@@ -66,6 +67,14 @@ class CommandManager {
     DriverManager.registerDriver(name, x, y);
   }
 
+  matchRider(riderName) {
+    if (typeof riderName !== "string")
+      throw new Error("riderName must be a string");
+
+    const matchResult = RideMatching.match(riderName);
+    return matchResult;
+  }
+
   /**
    *
    * @param {string} result
@@ -79,6 +88,8 @@ class CommandManager {
    * @returns {string} cummulative result of commands
    */
   getResult() {
+    const fs = require("fs");
+    fs.writeFileSync("sample_output/output.txt", this.result, "utf-8");
     return this.result;
   }
 }

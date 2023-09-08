@@ -20,10 +20,24 @@ class RiderManager {
       throw new Error("x and y must be numbers, name must be a string");
     }
 
+    name = name.trim();
+
     if (this.directory.has(name)) throw new Error("Rider already exists");
 
     let rider = new Rider(name, x, y);
     this.directory.set(name, rider);
+  }
+
+  /**
+   * return rider against the given name
+   * @param {String} name
+   * @returns {Rider}
+   */
+  getRider(name) {
+    if (typeof name !== "string") throw new Error("name must be a string");
+    name = name.trim();
+    if (this.directory.has(name)) return this.directory.get(name);
+    else throw new Error("rider not found");
   }
 }
 

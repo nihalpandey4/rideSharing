@@ -1,7 +1,5 @@
 const commandManager = require("./commands/commandManager");
 const fs = require("fs");
-const driverManager = require("./entities/driverManager");
-const riderManager = require("./entities/riderManager");
 
 // const filename = process.argv[2];
 const filename = "sample_input/input.txt";

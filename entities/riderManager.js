@@ -1,4 +1,5 @@
 const Rider = require("./rider");
+const Location = require("./location");
 
 class RiderManager {
   constructor() {
@@ -37,6 +38,46 @@ class RiderManager {
     if (typeof name !== "string") throw new Error("name must be a string");
     name = name.trim();
     if (this.directory.has(name)) return this.directory.get(name);
+    else throw new Error("rider not found");
+  }
+
+  /**
+   * return rider's location against the given name
+   * @param {String} name
+   * @returns {Location}
+   */
+  getRiderLocation(name) {
+    if (typeof name !== "string") throw new Error("name must be a string");
+    name = name.trim();
+    if (this.directory.has(name)) return this.directory.get(name).getLocation();
+    else throw new Error("rider not found");
+  }
+
+  /**
+   * return rider's availability against the given name
+   * @param {String} name
+   * @returns {Boolean}
+   */
+  getRiderAvailability(name) {
+    if (typeof name !== "string") throw new Error("name must be a string");
+    name = name.trim();
+    if (this.directory.has(name))
+      return this.directory.get(name).getAvailability();
+    else throw new Error("rider not found");
+  }
+
+  /**
+   * update rider's availability against the given name
+   * @param {String} name
+   * @param {Boolean} availability
+   */
+  updateRiderAvailability(name, availability) {
+    if (typeof name !== "string") throw new Error("name must be a string");
+    if (typeof availability !== "boolean")
+      throw new Error("availability must be a boolean");
+    name = name.trim();
+    if (this.directory.has(name))
+      return this.directory.get(name).updateAvailablility(availability);
     else throw new Error("rider not found");
   }
 }

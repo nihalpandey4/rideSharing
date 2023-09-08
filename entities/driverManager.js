@@ -1,6 +1,6 @@
-const Rider = require("./rider");
+const Driver = require("./driver");
 
-class RiderManager {
+class DriverManager {
   constructor() {
     this.directory = new Map();
   }
@@ -11,7 +11,7 @@ class RiderManager {
    * @param {Number} x 
    * @param {Number} y 
    */
-  registerRider(name, x, y) {
+  registerDriver(name, x, y) {
     if (
       typeof name !== "string" ||
       typeof x !== "number" ||
@@ -21,15 +21,17 @@ class RiderManager {
     }
 
     if(this.directory.has(name))
-        throw new Error("Rider already exists");
+        throw new Error("Driver already exists");
     
-    let rider = new Rider(name,x,y);
-    this.directory.set(name) = rider;
+    let driver = new Driver(name,x,y);
+    this.directory.set(name) = driver;
   }
+
+  
 
 }
 
 
-const riderManager = new RiderManager();
+const driverManager = new DriverManager();
 
-module.exports = riderManager;
+module.exports = driverManager;

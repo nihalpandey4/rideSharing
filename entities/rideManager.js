@@ -94,13 +94,16 @@ class RideManager {
    * @returns {number} bill
    */
   getBill(rideId) {
-    if (typeof rideId !== "string") throw new Error("rideId must be a string");
-
-    if (this.rideDirectory.has(rideId)) {
-      return `${rideId} ${this.getRide(rideId).getDriver()} ${this.getRide(
-        rideId
-      ).getBill()}`;
-    } else throw new Error("INVALID_RIDE");
+    try {
+      if (typeof rideId !== "string")
+        throw new Error("rideId must be a string");
+      const ride = this.getRide(rideId);
+      if (ride) {
+        return `${rideId} ${ride.getDriver()} ${ride.getBill()}`;
+      } else throw new Error("INVALID_RIDE");
+    } catch (err) {
+      return "INVALID_RIDE";
+    }
   }
 }
 

@@ -2,11 +2,11 @@ const commandManager = require("./commands/commandManager");
 const fs = require("fs");
 
 // const filename = process.argv[2];
-const filename = "sample_input/input.txt";
+const filename = "sample_input/input1.txt";
 
 fs.readFile(filename, "utf8", (err, data) => {
   if (err) throw err;
-  var inputLines = data.toString().split("\n");
+  var inputLines = data.toString().split("\r\n");
   inputLines.forEach((inputLine) => {
     commandManager.processCommand(inputLine);
   });

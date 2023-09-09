@@ -1,9 +1,9 @@
-const Driver = require("./driver");
+const Rider = require("../models/rider");
+const Location = require("../models/location");
 
-class DriverManager {
+class RiderManager {
   constructor() {
     this.directory = new Map();
-    this.driverNames = [];
   }
 
   /**
@@ -12,7 +12,7 @@ class DriverManager {
    * @param {Number} x
    * @param {Number} y
    */
-  registerDriver(name, x, y) {
+  registerRider(name, x, y) {
     if (
       typeof name !== "string" ||
       typeof x !== "number" ||
@@ -20,64 +20,68 @@ class DriverManager {
     ) {
       throw new Error("x and y must be numbers, name must be a string");
     }
+
     name = name.trim();
 
-    if (this.directory.has(name)) throw new Error("Driver already exists");
+    if (this.directory.has(name)) throw new Error("Rider already exists");
 
-    let driver = new Driver(name, x, y);
-    this.directory.set(name, driver);
-    this.driverNames.push(name);
+    let rider = new Rider(name, x, y);
+    this.directory.set(name, rider);
   }
 
   /**
-   * return driver against the given name
+   * return rider against the given name
    * @param {String} name
    * @returns {Rider}
    */
-  getDriver(name) {
+  getRider(name) {
     if (typeof name !== "string") throw new Error("name must be a string");
     name = name.trim();
     if (this.directory.has(name)) return this.directory.get(name);
-    else throw new Error("driver not found");
+    else throw new Error("rider not found");
   }
 
   /**
-   *
-   * @returns {[String]} array of drivernames
+   * return rider's location against the given name
+   * @param {String} name
+   * @returns {Location}
    */
-  getAllDriverNames() {
-    return this.driverNames;
+  getRiderLocation(name) {
+    if (typeof name !== "string") throw new Error("name must be a string");
+    name = name.trim();
+    if (this.directory.has(name)) return this.directory.get(name).getLocation();
+    else throw new Error("rider not found");
   }
 
   /**
-   * return driver's availability against the given name
+   * return rider's availability against the given name
    * @param {String} name
    * @returns {Boolean}
    */
-  getDriverAvailability(name) {
+  getRiderAvailability(name) {
     if (typeof name !== "string") throw new Error("name must be a string");
     name = name.trim();
     if (this.directory.has(name))
       return this.directory.get(name).getAvailability();
-    else throw new Error("driver not found");
+    else throw new Error("rider not found");
   }
 
   /**
-   * update driver's availability against the given name
+   * update rider's availability against the given name
    * @param {String} name
    * @param {Boolean} availability
    */
-  updateDriverAvailability(name, availability) {
+  updateRiderAvailability(name, availability) {
     if (typeof name !== "string") throw new Error("name must be a string");
     if (typeof availability !== "boolean")
       throw new Error("availability must be a boolean");
     name = name.trim();
     if (this.directory.has(name))
       return this.directory.get(name).updateAvailablility(availability);
-    else throw new Error("driver not found");
+    else throw new Error("rider not found");
   }
 }
 
-const driverManager = new DriverManager();
+const riderManager = new RiderManager();
 
-module.exports = driverManager;
+module.exports = riderManager;

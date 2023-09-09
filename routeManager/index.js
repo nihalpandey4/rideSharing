@@ -1,7 +1,7 @@
-const DriverManager = require("../entities/driverManager");
-const rideManager = require("../entities/rideManager");
-const RideMatching = require("../entities/rideMatching");
-const RiderManager = require("../entities/riderManager");
+const DriverManager = require("../services/driverManager");
+const rideManager = require("../services/rideManager");
+const RideMatching = require("../services/rideMatching");
+const RiderManager = require("../services/riderManager");
 
 class CommandManager {
   constructor() {

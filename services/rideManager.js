@@ -1,8 +1,8 @@
 const driverManager = require("./driverManager");
-const Ride = require("./ride");
+const Ride = require("../models/ride");
 const rideMatching = require("./rideMatching");
 const riderManager = require("./riderManager");
-const Location = require("./location");
+const Location = require("../models/location");
 
 class RideManager {
   constructor() {

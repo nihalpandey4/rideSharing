@@ -1,5 +1,5 @@
-const driverManager = require("./driverManager");
-const riderManager = require("./riderManager");
+const driverManager = require("../services/driverManager");
+const riderManager = require("../services/riderManager");
 const Location = require("./location");
 const BillCalculator = require("./billCalculator");
 

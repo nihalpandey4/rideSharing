@@ -11,7 +11,7 @@ class RideMatching {
   /**
    *
    * @param {String} riderName
-   * @returns {String} driverNames sorted based on distance within range defined
+   * @returns {[String]} driverNames sorted based on distance within range defined
    */
   match(riderName) {
     let rider = riderManager.getRider(riderName);
@@ -31,7 +31,7 @@ class RideMatching {
       return a.distance - b.distance;
     });
     let driverNames = inRangeDrivers.map((element) => element.driverName);
-    return driverNames.join(" ");
+    return driverNames;
   }
 }
 

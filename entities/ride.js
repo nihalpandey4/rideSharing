@@ -1,9 +1,17 @@
 const driverManager = require("./driverManager");
 const riderManager = require("./riderManager");
 const Location = require("./location");
+const BillCalculator = require("./billCalculator");
 
 class Ride {
-  constructor(riderName, driverName) {
+  constructor(
+    riderName,
+    driverName,
+    baseFare,
+    perKmCharge,
+    perMinuteCharge,
+    serviceTaxPercentage
+  ) {
     // checking availability
     if (!riderManager.getRiderAvailability(riderName))
       throw new Error("INVALID_RIDE");
@@ -16,24 +24,31 @@ class Ride {
     this.endLocation = null;
     this.distance = null;
     this.totalTime = null;
-    riderManager.updateRiderAvailability(false);
-    driverManager.updateDriverAvailability(false);
+    riderManager.updateRiderAvailability(riderName, false);
+    driverManager.updateDriverAvailability(driverName, false);
     this.finished = false;
+
+    this.bill = null;
+
+    this.billCalculator = new BillCalculator(
+      baseFare,
+      perKmCharge,
+      perMinuteCharge,
+      serviceTaxPercentage
+    );
   }
 
   /**
    * stops the ride
-   * @param {number} destination_x
-   * @param {number} destination_y
+   * @param {Location} destination_y
    * @param {number} totalTime
    */
-  stopRide(destination_x, destination_y, totalTime) {
-    this.endLocation = new Location(destination_x, destination_y);
+  stopRide(destinationLocation, totalTime) {
+    this.endLocation = destinationLocation;
     this.distance = this.startLocation.getDistance(this.endLocation);
     this.totalTime = totalTime;
     this.finished = true;
-    // const billCalculator = new BillCalculator();
-    // this.bill = billCalculator.calculate(this.distance, this.totalTime);
+    this.bill = this.billCalculator.calculate(this.distance, this.totalTime);
   }
 
   /**
@@ -58,6 +73,23 @@ class Ride {
    */
   isFinished() {
     return this.finished;
+  }
+
+  /**
+   *
+   * @returns {number} bill
+   */
+  getBill() {
+    if (this.isFinished) return this.bill;
+    else throw new Error("RIDE_NOT_COMPLETED");
+  }
+
+  /**
+   *
+   * @returns {string} driver name
+   */
+  getDriver() {
+    return this.driverName;
   }
 }
 
